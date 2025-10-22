@@ -1,4 +1,7 @@
-resource "azurerm_resource_group" "monitoring" {}
+resource "azurerm_resource_group" "monitoring" {
+name = "Monitoring_Boss"
+location = "East US"
+}
 resource "azurerm_virtual_network" "vnet" {}
 resource "azurerm_subnet" "subnet" {}
 resource "azurerm_network_security_group" "_nsg" {}
