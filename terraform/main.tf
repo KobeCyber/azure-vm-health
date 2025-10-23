@@ -111,7 +111,6 @@ resource "azurerm_log_analytics_workspace" "log_a" {
 resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
   resource_group_name = var.rg
-  location            = var.region
   scopes              = [azurerm_linux_virtual_machine.vm.id]
   description         = "Alert when CPU > 80%"
   severity            = 2
