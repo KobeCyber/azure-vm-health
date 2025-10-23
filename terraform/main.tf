@@ -47,8 +47,8 @@ resource "azurerm_network_security_group" "networksg" {
 
 resource "azurerm_network_interface" "nic" {
   name                = "example-nic"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.region
+  resource_group_name = var.rg
 
   ip_configuration {
     name                          = "internal"
@@ -62,8 +62,8 @@ resource "azurerm_network_interface" "nic" {
 
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "example-vm"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.region
+  resource_group_name = var.rg
   size                = "Standard_B1s"
   admin_username      = "adminuser"
   network_interface_ids = [
@@ -91,8 +91,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
 resource "azurerm_storage_account" "storage" {
   name                     = "examplestorageacc"
-  resource_group_name      = azurerm_resource_group.example.name
-  location                 = azurerm_resource_group.example.location
+  resource_group_name      = var.rg
+  location                 = var.region
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
@@ -101,8 +101,8 @@ resource "azurerm_storage_account" "storage" {
 
 resource "azurerm_log_analytics_workspace" "log_a" {
   name                = "example-law"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.region
+  resource_group_name = var.rg
   sku                 = "PerGB2018"
   retention_in_days   = 30
 }
@@ -111,8 +111,8 @@ resource "azurerm_log_analytics_workspace" "log_a" {
 
 resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = var.rg
+  location            = var.region
   scopes              = [azurerm_linux_virtual_machine.vm.id]
   description         = "Alert when CPU > 80%"
   severity            = 2
@@ -127,3 +127,4 @@ resource "azurerm_monitor_metric_alert" "alert" {
     threshold        = 80
   }
 }
+
