@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "monitoring" {
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = "monitorin-vnet"
+  name                = "monitoring-vnet"
   location            = azurerm_resource_group.monitoring.location
   resource_group_name = azurerm_resource_group.monitoring.name
   address_space       = ["10.0.0.0/16"]
@@ -20,7 +20,7 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_network_security_group" "_nsg" {
-name = mon-nsg
-resource_group_name = azurerm_resourcegroup.montioring.name
+name = "monitoring-nsg"
+resource_group_name = azurerm_resourcegroup.monitoring.name
 
 }
