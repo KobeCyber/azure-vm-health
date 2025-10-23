@@ -19,18 +19,12 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name = var.vnet
 }
 
-resource "azurerm_network_security_group" "nsg" {
-name = "monitoring-nsg"
-resource_group_name = var.rg
-
-}
-
-resource "azurerm_network_security_group" "monitoring-ssh" {
+resource "azurerm_network_security_group" "networksg" {
   name                = "ssh-enabled"
-  location            = azurerm_resource_group.montioring.name
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.region
+  resource_group_name = var.rg
 
-  security_rule {
+security_rule {
     name                       = "SSH"
     priority                   = 100
     direction                  = "Inbound"
@@ -41,3 +35,4 @@ resource "azurerm_network_security_group" "monitoring-ssh" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
