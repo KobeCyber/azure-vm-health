@@ -17,7 +17,7 @@ resource "azurerm_virtual_network" "vnet" {
 #Subnet
 
 resource "azurerm_subnet" "subnet" {
-  name                 = monitoring-subnet
+  name                 = "monitoring-subne"t
   address_prefixes     = ["10.0.1.0/24"]
   resource_group_name  = var.rg
   virtual_network_name = var.vnet
@@ -54,7 +54,6 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = azurerm_public_ip.example.id
   }
 }
 
