@@ -24,7 +24,7 @@ resource "azurerm_network_security_group" "networksg" {
   location            = var.region
   resource_group_name = var.rg
 
-security_rule {
+  security_rule {
     name                       = "SSH"
     priority                   = 100
     direction                  = "Inbound"
@@ -48,8 +48,8 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id           = azurerm_public_ip.example.id
-}
+    public_ip_address_id          = azurerm_public_ip.example.id
+  }
 }
 
 #Linux VM
@@ -78,6 +78,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+}
 
 #Storage
 
