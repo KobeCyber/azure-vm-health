@@ -20,7 +20,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = "monitoring-subnet"
   address_prefixes     = ["10.0.1.0/24"]
   resource_group_name  = var.rg
-  virtual_network_name = var.vnet
+virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
 # Network Security Gtoup
@@ -42,6 +42,13 @@ resource "azurerm_network_security_group" "networksg" {
     destination_address_prefix = "*"
   }
 }
+
+#Network attachment
+resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
+  network_interface_id      = azurerm_network_interface.nic.id
+  network_security_group_id = azurerm_network_security_group.networksg.id
+}
+
 
 #Network Interface Card
 
@@ -89,7 +96,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 #Storage
 
 resource "azurerm_storage_account" "storage" {
-  name                     = "examplestorageacc"
+  name                     = "kobecybertest-1"
   resource_group_name      = var.rg
   location                 = var.region
   account_tier             = "Standard"
