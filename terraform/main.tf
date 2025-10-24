@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "monitoring" {
 resource "azurerm_virtual_network" "vnet" {
   name                = var.vnet
   location            = var.region
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
   address_space       = ["10.0.0.0/16"]
   dns_servers         = ["1.1.1.1", "8.8.8.8"]
 
@@ -20,7 +20,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = "monitoring-subnet"
   address_prefixes     = ["10.0.1.0/24"]
   resource_group_name  = var.rg
-virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
 # Network Security Gtoup
@@ -28,7 +28,7 @@ virtual_network_name = azurerm_virtual_network.vnet.name
 resource "azurerm_network_security_group" "networksg" {
   name                = "ssh-enabled"
   location            = var.region
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
 
   security_rule {
     name                       = "SSH"
@@ -55,7 +55,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_assoc" {
 resource "azurerm_network_interface" "nic" {
   name                = "example-nic"
   location            = var.region
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
 
   ip_configuration {
     name                          = "internal"
@@ -69,7 +69,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "example-vm"
   location            = var.region
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
   size                = "Standard_B1s"
   admin_username      = "adminuser"
   network_interface_ids = [
@@ -108,7 +108,7 @@ resource "azurerm_storage_account" "storage" {
 resource "azurerm_log_analytics_workspace" "log_a" {
   name                = "example-law"
   location            = var.region
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
 }
@@ -117,7 +117,7 @@ resource "azurerm_log_analytics_workspace" "log_a" {
 
 resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
-  resource_group_name = var.rg
+  resource_group_name = azurerm_resource_group.monitoring.name
   scopes              = [azurerm_linux_virtual_machine.vm.id]
   description         = "Alert when CPU > 80%"
   severity            = 2
