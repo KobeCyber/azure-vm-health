@@ -96,7 +96,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 #Storage
 
 resource "azurerm_storage_account" "storage" {
-  name                     = "kobecybertest-1"
+  name                     = "kobecybertest1"
   resource_group_name      = var.rg
   location                 = var.region
   account_tier             = "Standard"
