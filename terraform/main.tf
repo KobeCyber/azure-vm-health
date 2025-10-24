@@ -102,22 +102,39 @@ resource "azurerm_log_analytics_workspace" "log_a" {
   retention_in_days   = 30
 }
 
-# Install Azure Montior Agent to Linux VM
+# Data Collection Rule (DCR)
+resource "azurerm_monitor_data_collection_rule" "linux_dcr" {
+  name                = "linux-monitoring-dcr"
+  location            = var.region
+  resource_group_name = azurerm_resource_group.monitoring.name
 
-resource "azurerm_virtual_machine_extension" "ama" {
-  name                 = "OmsAgentForLinux"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.EnterpriseCloud.Monitoring"
-  type                 = "OmsAgentForLinux"
-  type_handler_version = "1.13"
+  destinations {
+    log_analytics {
+      name                  = "default-destination"
+      workspace_resource_id  = azurerm_log_analytics_workspace.log_a.id
+    }
+  }
 
-  settings = jsonencode({
-    workspaceId = azurerm_log_analytics_workspace.log_a.workspace_id
-  })
+  data_flow {
+    streams      = ["Microsoft-InsightsMetrics"]
+    destinations = ["default-destination"]
+  }
 
-  protected_settings = jsonencode({
-    workspaceKey = azurerm_log_analytics_workspace.log_a.primary_shared_key
-  })
+  data_sources {
+    performance_counter {
+      name                          = "linux-perf"
+      streams                       = ["Microsoft-InsightsMetrics"]
+      sampling_frequency_in_seconds = 60
+      counter_specifiers             = ["\\Processor(_Total)\\% Processor Time"]
+    }
+  }
+}
+
+# Data Collection Rule Association (VM + DCR)
+resource "azurerm_monitor_data_collection_rule_association" "vm_assoc" {
+  name                    = "vm-dcra"
+  target_resource_id      = azurerm_linux_virtual_machine.vm.id
+  data_collection_rule_id = azurerm_monitor_data_collection_rule.linux_dcr.id
 }
 
 
