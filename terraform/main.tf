@@ -64,7 +64,7 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
-#Linux VM
+#Linux Virtual Machine - Ubuntu
 
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "example-vm"
@@ -91,6 +91,25 @@ resource "azurerm_linux_virtual_machine" "vm" {
     version   = "latest"
   }
 }
+
+# Install Azure Montior Agent to Linux VM
+
+resource "azurerm_virtual_machine_extension" "ama" {
+  name                 = "AzureMonitorLinuxAgent"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Monitor"
+  type                 = "AzureMonitorLinuxAgent"
+  type_handler_version = "1.0"
+
+  settings = jsonencode({
+    workspaceId = azurerm_log_analytics_workspace.log_a.workspace_id
+  })
+
+  protected_settings = jsonencode({
+    workspaceKey = azurerm_log_analytics_workspace.log_a.primary_shared_key
+  })
+}
+
 
 #Storage
 
