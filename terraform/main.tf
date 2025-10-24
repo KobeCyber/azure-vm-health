@@ -105,11 +105,11 @@ resource "azurerm_log_analytics_workspace" "log_a" {
 # Install Azure Montior Agent to Linux VM
 
 resource "azurerm_virtual_machine_extension" "ama" {
-  name                 = "AzureMonitorLinuxAgent"
+  name                 = "OmsAgentForLinux"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Monitor"
-  type                 = "AzureMonitorLinuxAgent"
-  type_handler_version = "1.0"
+  publisher            = "Microsoft.EnterpriseCloud.Montioring"
+  type                 = "OmsAgentForLinux"
+  type_handler_version = "*"
 
   settings = jsonencode({
     workspaceId = azurerm_log_analytics_workspace.log_a.workspace_id
