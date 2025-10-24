@@ -92,6 +92,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
+#Log Analytics
+
+resource "azurerm_log_analytics_workspace" "log_a" {
+  name                = "example-law"
+  location            = var.region
+  resource_group_name = azurerm_resource_group.monitoring.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
 # Install Azure Montior Agent to Linux VM
 
 resource "azurerm_virtual_machine_extension" "ama" {
@@ -121,15 +131,6 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
-#Log Analytics
-
-resource "azurerm_log_analytics_workspace" "log_a" {
-  name                = "example-law"
-  location            = var.region
-  resource_group_name = azurerm_resource_group.monitoring.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-}
 
 #Alerts
 
