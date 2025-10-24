@@ -107,9 +107,9 @@ resource "azurerm_log_analytics_workspace" "log_a" {
 resource "azurerm_virtual_machine_extension" "ama" {
   name                 = "OmsAgentForLinux"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.EnterpriseCloud.Montioring"
+  publisher            = "Microsoft.EnterpriseCloud.Monitoring"
   type                 = "OmsAgentForLinux"
-  type_handler_version = "*"
+  type_handler_version = "1.13"
 
   settings = jsonencode({
     workspaceId = azurerm_log_analytics_workspace.log_a.workspace_id
