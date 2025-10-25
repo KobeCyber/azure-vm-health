@@ -77,7 +77,7 @@ resource "azurerm_network_interface" "nic" {
 #Linux Virtual Machine - Ubuntu
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "example-vm"
+  name                = "monitoring-vm"
   location            = var.region
   resource_group_name = azurerm_resource_group.monitoring.name
   size                = "Standard_B1s"
@@ -112,7 +112,7 @@ resource "azurerm_log_analytics_workspace" "log_a" {
   retention_in_days   = 30
 }
 
-# Data Collection Rule (DCR)
+# Data Collection Rule
 resource "azurerm_monitor_data_collection_rule" "linux_dcr" {
   name                = "linux-monitoring-dcr"
   location            = var.region
@@ -179,3 +179,38 @@ resource "azurerm_monitor_metric_alert" "alert" {
   }
 }
 
+# Send to my email
+resource "azurerm_monitor_action_group" "email_group" {
+  name                = "email-action-group"
+  resource_group_name = azurerm_resource_group.monitoring.name
+  short_name          = "emailgrp"
+
+  email_receiver {
+    name                    = "kobecyber-email"
+    email_address           = "kobecyber@gmail.com"
+    use_common_alert_schema = true
+  }
+}
+
+# Attach Action Group to the alert
+resource "azurerm_monitor_metric_alert" "alert" {
+  name                = "cpu-alert"
+  resource_group_name = azurerm_resource_group.monitoring.name
+  scopes              = [azurerm_linux_virtual_machine.vm.id]
+  description         = "Alert when CPU > 80%"
+  severity            = 2
+  frequency           = "PT1M"
+  window_size         = "PT5M"
+
+  criteria {
+    metric_namespace = "Microsoft.Compute/virtualMachines"
+    metric_name      = "Percentage CPU"
+    aggregation      = "Average"
+    operator         = "GreaterThan"
+    threshold        = 80
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.email_group.id
+  }
+}
