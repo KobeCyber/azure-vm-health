@@ -12,7 +12,7 @@ terraform {
 
 # Need to add a secure way to store subscription_id
 provider "azurerm" {
-  subscription_id = "fb4d1643-0955-4b13-bd3c-6fe40aadfeb1"
+  subscription_id = ""
   features {}
 }
 
