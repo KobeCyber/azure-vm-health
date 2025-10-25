@@ -187,7 +187,7 @@ resource "azurerm_monitor_action_group" "email_group" {
 
   email_receiver {
     name                    = "kobecyber-email"
-    email_address           = "kobecyber@gmail.com"
+    email_address           = "ktembobusiness@gmail.com"
     use_common_alert_schema = true
   }
 }
