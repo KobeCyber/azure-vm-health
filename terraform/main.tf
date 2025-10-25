@@ -62,7 +62,7 @@ resource "azurerm_public_ip" "public_ip" {
 #Network Interface Card
 
 resource "azurerm_network_interface" "nic" {
-  name                = "example-nic"
+  name                = "monitoring-nic"
   location            = var.region
   resource_group_name = azurerm_resource_group.monitoring.name
 
@@ -81,13 +81,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = var.region
   resource_group_name = azurerm_resource_group.monitoring.name
   size                = "Standard_B1s"
-  admin_username      = "adminuser"
+  admin_username      = "kobe"
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
 
   admin_ssh_key {
-    username   = "adminuser"
+    username   = "kobe"
     public_key = file("~/.ssh/id_rsa.pub")
   }
   os_disk {
@@ -105,7 +105,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 #Log Analytics
 
 resource "azurerm_log_analytics_workspace" "log_a" {
-  name                = "example-law"
+  name                = "monitoring-law"
   location            = var.region
   resource_group_name = azurerm_resource_group.monitoring.name
   sku                 = "PerGB2018"
