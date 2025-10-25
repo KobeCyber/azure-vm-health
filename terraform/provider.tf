@@ -12,6 +12,7 @@ terraform {
 
 # Need to add a secure way to store subscription_id
 provider "azurerm" {
+  subscription_id = var.subscription_id
   features {}
 }
 

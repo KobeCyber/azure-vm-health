@@ -16,4 +16,8 @@ variable "vnet" {
   default     = "monitoring-vnet"
 }
 
+# Create Terraform.tfvars to keep secret hidden
 
+variable "subscription_id" {
+  type = string
+}
