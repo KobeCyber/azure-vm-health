@@ -165,7 +165,7 @@ resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
   resource_group_name = azurerm_resource_group.monitoring.name
   scopes              = [azurerm_linux_virtual_machine.vm.id]
-  description         = "Alert when CPU > 80%"
+  description         = "Alert when CPU > 10%"
   severity            = 2
   frequency           = "PT1M"
   window_size         = "PT5M"
@@ -175,7 +175,7 @@ resource "azurerm_monitor_metric_alert" "alert" {
     metric_name      = "Percentage CPU"
     aggregation      = "Average"
     operator         = "GreaterThan"
-    threshold        = 80
+    threshold        = 10
   }
 }
 
@@ -197,7 +197,7 @@ resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
   resource_group_name = azurerm_resource_group.monitoring.name
   scopes              = [azurerm_linux_virtual_machine.vm.id]
-  description         = "Alert when CPU > 80%"
+  description         = "Alert when CPU > 10%"
   severity            = 2
   frequency           = "PT1M"
   window_size         = "PT5M"
@@ -207,7 +207,7 @@ resource "azurerm_monitor_metric_alert" "alert" {
     metric_name      = "Percentage CPU"
     aggregation      = "Average"
     operator         = "GreaterThan"
-    threshold        = 80
+    threshold        = 10
   }
 
   action {
