@@ -121,7 +121,7 @@ resource "azurerm_monitor_data_collection_rule" "linux_dcr" {
   destinations {
     log_analytics {
       name                  = "default-destination"
-      workspace_resource_id  = azurerm_log_analytics_workspace.log_a.id
+      workspace_resource_id = azurerm_log_analytics_workspace.log_a.id
     }
   }
 
@@ -135,7 +135,7 @@ resource "azurerm_monitor_data_collection_rule" "linux_dcr" {
       name                          = "linux-perf"
       streams                       = ["Microsoft-InsightsMetrics"]
       sampling_frequency_in_seconds = 60
-      counter_specifiers             = ["\\Processor(_Total)\\% Processor Time"]
+      counter_specifiers            = ["\\Processor(_Total)\\% Processor Time"]
     }
   }
 }
@@ -158,27 +158,6 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
 }
 
-
-#Alerts
-
-resource "azurerm_monitor_metric_alert" "alert" {
-  name                = "cpu-alert"
-  resource_group_name = azurerm_resource_group.monitoring.name
-  scopes              = [azurerm_linux_virtual_machine.vm.id]
-  description         = "Alert when CPU > 10%"
-  severity            = 2
-  frequency           = "PT1M"
-  window_size         = "PT5M"
-
-  criteria {
-    metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "Percentage CPU"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 10
-  }
-}
-
 # Send to my email
 resource "azurerm_monitor_action_group" "email_group" {
   name                = "email-action-group"
@@ -192,7 +171,7 @@ resource "azurerm_monitor_action_group" "email_group" {
   }
 }
 
-# Attach Action Group to the alert
+# Create Alert and attach to email group
 resource "azurerm_monitor_metric_alert" "alert" {
   name                = "cpu-alert"
   resource_group_name = azurerm_resource_group.monitoring.name
