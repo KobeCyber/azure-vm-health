@@ -2,7 +2,7 @@ version: 1
 
 workspace:
   project_root: terraform
-  terraform_version: 1.5.7
+  terraform_version: 1.10.6
   backend_type: spacelift
 
 stack:
