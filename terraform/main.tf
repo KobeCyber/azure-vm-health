@@ -145,8 +145,6 @@ resource "azurerm_monitor_data_collection_rule_association" "vm_assoc" {
   name                    = "vm-dcra"
   target_resource_id      = azurerm_linux_virtual_machine.vm.id
   data_collection_rule_id = azurerm_monitor_data_collection_rule.linux_dcr.id
-
-depends_on = [azurerm_linux_virtual_machine.vm]
 }
 
 
@@ -193,7 +191,5 @@ resource "azurerm_monitor_metric_alert" "alert" {
 
   action {
     action_group_id = azurerm_monitor_action_group.email_group.id
-depends_on = [azurerm_linux_virtual_machine.vm]
-  
 }
 }
