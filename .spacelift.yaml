@@ -8,21 +8,9 @@ workspace:
 stack:
   name: azure-vm-health
   description: "Terraform-managed Azure VM Health Monitoring Environment"
-  before_init:
-    - echo "🧩 Initializing Terraform backend..."
+
   before_plan:
-    - echo " Running plan for Azure resources..."
+    - echo "Running Terraform plan"
+  
   after_apply:
-    - echo " Deployment complete!"
-  after_destroy:
-    - echo "🧹 Resources destroyed successfully."
-
-integrations:
-  github:
-    repo_name: "KobeCyber/azure-vm-health"
-    branch: "main"
-
-  enforce:
-    - check: "Ensure naming convention consistency"
-      command: echo "Policy check passed "
-
+    - echo "Deployment complete!"
