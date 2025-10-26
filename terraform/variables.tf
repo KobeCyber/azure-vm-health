@@ -16,6 +16,12 @@ variable "vnet" {
   default     = "monitoring-vnet"
 }
 
+variable "ssh_public_key" {
+  description = "The SSH public key to use for the VM"
+  type        = string
+}
+
+
 # Create Terraform.tfvars to hold subscription ID and git ignore it
 
 # moved my subscription_id and secrets over to spacelift.io :)
