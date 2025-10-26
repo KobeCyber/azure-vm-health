@@ -16,8 +16,6 @@ variable "vnet" {
   default     = "monitoring-vnet"
 }
 
-# Create Terraform.tfvars to keep secret hidden
+# Create Terraform.tfvars to hold subscription ID and git ignore it
 
-variable "subscription_id" {
-  type = string
-}
+# moved my subscription_id and secrets over to spacelift.io :)
