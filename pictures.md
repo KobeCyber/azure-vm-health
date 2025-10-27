@@ -1,3 +1,5 @@
+**#Email ALerts when CPU is ran past 0.1%**
+<img width="895" height="722" alt="image" src="https://github.com/user-attachments/assets/23e36156-5335-4a9b-85d1-e77c11bf34b6" />
 
 **#Spacelift CI/CD in action**
 <img width="1310" height="598" alt="image" src="https://github.com/user-attachments/assets/2c5e6968-4379-4096-a92a-ffbca8bf0f48" />
