@@ -147,17 +147,6 @@ resource "azurerm_monitor_data_collection_rule_association" "vm_assoc" {
   data_collection_rule_id = azurerm_monitor_data_collection_rule.linux_dcr.id
 }
 
-
-#Storage
-
-resource "azurerm_storage_account" "storage" {
-  name                     = "kobecybertest1"
-  resource_group_name      = azurerm_resource_group.monitoring.name
-  location                 = var.region
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
 # Send to my email
 resource "azurerm_monitor_action_group" "email_group" {
   name                = "email-action-group"
