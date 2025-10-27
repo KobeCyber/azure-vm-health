@@ -12,5 +12,6 @@
 <img width="1310" height="598" alt="image" src="https://github.com/user-attachments/assets/62c68897-1f86-458c-ac5e-912d23ae7a83" />
 
 **#Deployed environment**
-<img width="1166" height="1165" alt="Monitoring_Boss" src="https://github.com/user-attachments/assets/83b252d0-55a0-4ac1-b5cc-030d11169fbb" />
+<img width="875" height="1165" alt="Monitoring_Boss (1)" src="https://github.com/user-attachments/assets/56b89c31-3597-4d51-9fba-3d6423f6865d" />
+
 
