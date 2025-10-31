@@ -24,3 +24,23 @@ variable "enable_vm_diagnostics" {
   description = "Whether to enable diagnostics settings for the VM"
   default     = false
 }
+
+variable "action_group_name" {
+  type        = string
+  description = "Name of the action group for alerts"
+}
+
+variable "alert_email" {
+  type        = string
+  description = "Email address to receive alerts"
+}
+
+variable "alert_name" {
+  type        = string
+  description = "Name of the CPU alert"
+}
+
+variable "cpu_threshold" {
+  type        = number
+  description = "CPU usage threshold for alerting"
+}
